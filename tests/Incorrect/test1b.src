@@ -1,0 +1,50 @@
+program grant is
+begin
+    global variable JAKE : integer ;
+    global variable ryan : integer[3] ;
+    global variable zach : integer ;
+BEGIN
+    variable tmp : integer ;
+
+    procedure if_proc : integer()
+    variable i : integer;
+    procedure dummy : float()
+    // this should just hide the i of the outer environment
+    variable i : float;
+    variable tst : bool;
+begin
+        i := 4.5;
+        tst := putString("passed");
+        return (0);
+    end program // corrected to end procedure
+
+    begin
+        i := for_proc(); // this should fail; we do not allow forward references.
+        if(true) then 
+            JAKE := JAKE + 1; // corrected variable usage
+        else 
+            zach := zach + ryan[2]; // corrected variable usage
+        end if;
+        return (0);
+    end procedure;
+
+    procedure for_proc : integer()
+    variable x : bool;
+    procedure dummy2 : float()
+    begin
+        i := 3;  // this should fail; we do not allow forward references
+        return 1;
+    end procedure;
+
+    global variable i : integer; // placed here to avoid forward reference issues
+    begin
+        for(i := 0; i < zach) do // added 'do' for proper syntax
+            ryan[1] := zach + i;
+        end for;
+        return (0);
+    end procedure;
+
+    begin
+        tmp := if_proc();
+        tmp := for_proc();
+    END PROGRAM
